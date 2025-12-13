@@ -17,7 +17,10 @@ import edu.uoc.epcsd.course.domain.repository.UserRepository;
 import edu.uoc.epcsd.course.infrastructure.kafka.CourseMessage;
 import edu.uoc.epcsd.course.infrastructure.kafka.KafkaConstants;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
+
+@Log4j2
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @Service
 public class CourseServiceImpl implements CourseService {
@@ -35,30 +38,28 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<String> getEnrolledStudents(Long courseId) {
 
-    	// TODO: add the code for the missing system operations here:
-    	// return course.getEnrollment() if courseId exists         
-
-        return null;
+    	// return course.getEnrollment() if courseId exists   
+        Course course = courseRepository
+                .getCourseById(courseId)
+                .orElseThrow(() -> new IllegalArgumentException("The "+courseId+" course does not exist!"));  
+        return course.getEnrollment(); 
     }
 
     @Override
-    public Optional<Course> getCourseById(Long courseId) {
-    	
-    	// TODO: add the code for the missing system operations here:
-    	// return getCourseById(courseId) if courseId exists         
- 
-    	return null;
+    public Optional<Course> getCourseById(Long courseId) {    	
+
+    	// return getCourseById(courseId) if courseId exists          
+    	return courseRepository.getCourseById(courseId);
     
     }
 
     @Override
     public Long createCourse(Course course) {
-    	
-    	// TODO: add the code for the missing system operations here:
-    	// set status how DRAFT
+   	    	// set status how DRAFT
+        course.setStatus(CourseStatus.DRAFT);          
         // and return courseRepository.createCourse(course)         
     	
-    	return null;
+    	return courseRepository.createCourse(course);
     }
 
     @Override

@@ -49,7 +49,6 @@ public class ProductRESTController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<Product>> findProductsByCriteria(FindProductsByCriteria findProductsCriteria) {
         log.trace("findProductsByCriteria");
-
         try {
             return ResponseEntity.ok(productService.findProductsByExample(Product.builder()
                     .name(findProductsCriteria.getName())
