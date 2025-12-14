@@ -1,5 +1,7 @@
 package edu.uoc.epcsd.notification.application.kafka;
 
+import java.time.LocalDateTime;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -15,6 +17,9 @@ import lombok.ToString;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductMessage {
-    private Long productId;
+public class CourseMessage {
+    private Long courseId;
+    private String type;
+    private LocalDateTime occurredOn;
+    private String payload;
 }

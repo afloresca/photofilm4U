@@ -110,7 +110,7 @@ public class CourseServiceImpl implements CourseService {
         //emit event CourseEnrollmentOpened
         courseKafkaTemplate.send(KafkaConstants.COURSE_TOPIC, CourseMessage.builder()
                 .courseId(courseId)
-                .type("ENROLLMENT_OPENED")
+                .type(KafkaConstants.COURSE_ENROLLMENT_OPENED)
                 .occurredOn(LocalDateTime.now())
                 .payload(Long.toString(courseId))
                 .build());
@@ -135,7 +135,7 @@ public class CourseServiceImpl implements CourseService {
         //emit event CourseEnrollmentClosed
         courseKafkaTemplate.send(KafkaConstants.COURSE_TOPIC, CourseMessage.builder()
                 .courseId(courseId)
-                .type("ENROLLMENT_CLOSED")
+                .type(KafkaConstants.COURSE_ENROLLMENT_CLOSED)
                 .occurredOn(LocalDateTime.now())
                 .payload(Long.toString(courseId))
                 .build());
@@ -173,7 +173,7 @@ public class CourseServiceImpl implements CourseService {
 
         courseKafkaTemplate.send(KafkaConstants.COURSE_TOPIC, CourseMessage.builder()
                 .courseId(courseId)
-                .type("STUDENT_ENROLLED")
+                .type(KafkaConstants.COURSE_STUDENT_ENROLLED)
                 .occurredOn(LocalDateTime.now())
                 .payload(userEmail)
                 .build());
@@ -198,7 +198,7 @@ public class CourseServiceImpl implements CourseService {
         //send kafka event CourseGradeReportsClosed
         courseKafkaTemplate.send(KafkaConstants.COURSE_TOPIC, CourseMessage.builder()
                 .courseId(courseId)
-                .type("GRADE_REPORTS_CLOSED")
+                .type(KafkaConstants.COURSE_GRADE_REPORTS_CLOSED)
                 .occurredOn(LocalDateTime.now())
                 .payload(Long.toString(courseId))
                 .build());  

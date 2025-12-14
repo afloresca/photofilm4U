@@ -1,5 +1,7 @@
 package edu.uoc.epcsd.notification.domain.service;
 
+import edu.uoc.epcsd.notification.application.kafka.CourseMessage;
+import edu.uoc.epcsd.notification.application.kafka.KafkaConstants;
 import edu.uoc.epcsd.notification.application.kafka.ProductMessage;
 import edu.uoc.epcsd.notification.application.rest.dtos.GetProductResponse;
 import edu.uoc.epcsd.notification.application.rest.dtos.GetUserResponse;
@@ -30,5 +32,42 @@ public class NotificationServiceImpl implements NotificationService {
         for (GetUserResponse user : usersToAlert) {
             log.info("Sending an email to user " + user.getFullName() + " at \"" + user.getEmail() + "\" to notify new units available on product \"" + product.getName() + "\".");
         }
+    }
+
+        // Implementation for course event notification
+    @Override
+    public void notifyCourseEvent(CourseMessage courseMessage) {   
+        
+        switch (courseMessage.getType()) {
+         case KafkaConstants.COURSE_GRADE_REPORTS_CLOSED:
+            log.info(
+                "MOCK EMAIL: Grade reports have been closed for course {}",
+                courseMessage.getCourseId()
+            );
+            break;
+
+        case KafkaConstants.COURSE_ENROLLMENT_OPENED:
+            log.info(
+                "MOCK EMAIL: Enrollment has been opened for course {}",
+                courseMessage.getCourseId()
+            );
+            break;
+
+        case KafkaConstants.COURSE_STUDENT_ENROLLED:
+            log.info(
+                "MOCK EMAIL: {} has been enrolled in course {}",
+                courseMessage.getPayload(),
+                courseMessage.getCourseId()
+            );
+            break;
+
+        default:
+            log.warn(
+                "Something happened on the way to heaven (unknown event): {} with payload {}",
+                courseMessage.getType(),
+                courseMessage.getPayload()
+            );           
+        }
+
     }
 }

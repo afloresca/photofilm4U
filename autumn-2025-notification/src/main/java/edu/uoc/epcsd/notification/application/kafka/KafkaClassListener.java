@@ -20,4 +20,11 @@ public class KafkaClassListener {
 
         notificationService.notifyProductAvailable(productMessage);
     }
+
+    // Added listener for course events
+    @KafkaListener(topics = KafkaConstants.COURSE_TOPIC , groupId = "group-1")
+     void courseEvent(CourseMessage courseMessage) {
+        log.trace("courseEvent");
+        notificationService.notifyCourseEvent(courseMessage);
+    }
 }
