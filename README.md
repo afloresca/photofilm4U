@@ -11,7 +11,7 @@
   <h3 align="center">SA</h3>
 
   <p align="center">
-    SA project stub
+    SA project Solution
     <br />
     <br />
     <a href="https://github.com/UOC-SA-AUTUMN-2025/autumn-2025/issues">Report Bug</a>
@@ -53,11 +53,12 @@
 
 This is the lab project for the SA course at the UOC. It is made up of 3 elements (each one in its own GIT repository):
 
-* A <a href="https://github.com/UOC-SA-AUTUMN-2025/autumn-2025/blob/main/docker-compose.yml">docker-compose.yml</a> file to startup the basic infrastructure needed to run the services
+* A <a href="https://github.com/UOC-SA-AUTUMN-2025/autumn-2025/blob/main/docker-compose.yml">docker-compose.yml</a> file to startup the infrastructure needed to run the services
 * A folder for the <a href="https://github.com/UOC-SA-AUTUMN-2025/autumn-2025-productcatalog">ProductCatalog</a> microservice 
 * A folder for the <a href="https://github.com/UOC-SA-AUTUMN-2025/autumn-2025-user">User</a> microservice 
 * A folder for the <a href="https://github.com/UOC-SA-AUTUMN-2025/autumn-2025-notification">Notification</a> microservice 
-* A folder for the <a href="https://github.com/UOC-SA-AUTUMN-2025/autumn-2025-course">Course</a> microservice 
+* A folder for the <a href="https://github.com/UOC-SA-AUTUMN-2025/autumn-2025-course">Course</a> microservice
+* A folder for the executables and an alternative docker-compose.yml with all the configuration needed to run the whole project along with microservices  
 
 <p align="right">(<a href="#top">go up</a>)</p>
 
