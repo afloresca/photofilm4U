@@ -1,0 +1,106 @@
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.9.0
+    platform: linux/amd64
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - 22181:2181
+  
+  kafka:
+    image: confluentinc/cp-kafka:7.9.0
+    platform: linux/amd64
+    depends_on:
+      - zookeeper
+    ports:
+      - 29092:9092
+      - 19092:19092
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092, CONNECTIONS_FROM_HOST://localhost:19092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT,CONNECTIONS_FROM_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+  productdb:
+    image: postgres
+    platform: linux/amd64
+    restart: always
+    ports:
+      - 54320:5432
+    environment:
+      POSTGRES_USER: product
+      POSTGRES_PASSWORD: product
+      
+  userdb:
+    image: postgres
+    platform: linux/amd64
+    restart: always
+    ports:
+      - 54321:5432
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: user
+  
+  coursedb:
+    image: postgres
+    platform: linux/amd64
+    restart: always
+    ports:
+      - 54322:5432
+    environment:
+      POSTGRES_USER: course
+      POSTGRES_PASSWORD: course
+  
+  adminer:
+    image: adminer
+    platform: linux/amd64
+    restart: always
+    ports:
+      - 18080:8080
+
+  course:
+    image: course-service
+    container_name: course-service
+    depends_on:
+      - kafka
+      - coursedb
+    ports:
+      - "18084:18084"
+    networks:
+      - default
+
+  product-catalog:
+    image: product-catalog-service
+    container_name: product-catalog-service
+    depends_on:
+      - kafka
+      - coursedb
+    ports:
+      - "18081:18081"
+    networks:
+      - default
+
+  notification:
+    image: notification-service
+    container_name: notification-service
+    depends_on:
+      - kafka
+      - userdb
+    ports:
+      - "18083:18083"
+    networks:
+      - default
+  user:
+    image: user-service
+    container_name: user-service
+    depends_on:
+      - kafka
+      - userdb
+    ports:
+      - "18083:18083"
+    networks:
+      - default
+
+    

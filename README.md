@@ -8,19 +8,10 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <h3 align="center">SA</h3>
-
   <p align="center">
-    SA project Solution
-    <br />
-    <br />
-    <a href="https://github.com/UOC-SA-AUTUMN-2025/autumn-2025/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/UOC-SA-AUTUMN-2025/autumn-2025/issues">Request Feature</a>
+   <h2>SA PRAC2 Solution</h2>
   </p>
 </div>
-
-
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -36,14 +27,15 @@
       <a href="#before-starting">Before starting</a>
     </li>
     <li>
+      <a href="#project-folder-structure">Project Folder Structure</a>
+    </li>
+    <li>
       <a href="#installation">Tnstallation</a>
       <ul>
-        <li><a href="#docker-desktop--docker-compose-installation">Docker Desktop / Docker Compose installation</a></li>
+        <li><a href="#microservices-docker-installation">Docker Desktop / Docker Compose installation</a></li>
         <li><a href="#basic-infrastructure-dockers">Basic infrastructure (dockers)</a></li>
-        <li><a href="#microservices-stubs">Microservices stubs</a></li>
       </ul>
     </li>
-    <li><a href="#links-to-tools-libraries-and-used-modules">Links to tools, libraries and used modules</a></li>
     <li><a href="#contact">Contact</a></li>
   </ol>
 </details>
@@ -51,14 +43,19 @@
 <!-- About this project -->
 ## About this project
 
-This is the lab project for the SA course at the UOC. It is made up of 3 elements (each one in its own GIT repository):
+This is the solution project for the **SA PRAC2**.
 
-* A <a href="https://github.com/UOC-SA-AUTUMN-2025/autumn-2025/blob/main/docker-compose.yml">docker-compose.yml</a> file to startup the infrastructure needed to run the services
-* A folder for the <a href="https://github.com/UOC-SA-AUTUMN-2025/autumn-2025-productcatalog">ProductCatalog</a> microservice 
-* A folder for the <a href="https://github.com/UOC-SA-AUTUMN-2025/autumn-2025-user">User</a> microservice 
-* A folder for the <a href="https://github.com/UOC-SA-AUTUMN-2025/autumn-2025-notification">Notification</a> microservice 
-* A folder for the <a href="https://github.com/UOC-SA-AUTUMN-2025/autumn-2025-course">Course</a> microservice
-* A folder for the executables and an alternative docker-compose.yml with all the configuration needed to run the whole project along with microservices  
+In this file you will find how to locate and execute, in two different ways, all or some of the microservice. Executables can be found at photofilm4 folder
+
+* A docker-compose.yml file to startup the basic infrastructure needed to run the services
+* A folder for the ProductCatalog microservice 
+* A folder for the User microservice 
+* A folder for the Notification microservice 
+* A folder for the Course microservice. **This folder has the implemented classes**
+* A folder photofilm4u for 
+    * The executables jar files
+    * An alternative docker-compose.yml with all the configuration needed to run the whole project, basic infraestructure along with microservices.
+    
 
 <p align="right">(<a href="#top">go up</a>)</p>
 
@@ -91,18 +88,7 @@ To avoid conflicts with other installed applications, the default ports of all a
 
 __IMPORTANT NOTICE:__ The modified ports will also have to be changed in the microservices configuration (usually defined in the Spring _application.properties_ file).
 
-
-## Installation
-
-### Docker Desktop / Docker Compose installation
-
-Proceed to install Docker Compose following the steps described in the following guide: https://docs.docker.com/compose/install/ (according to your OS).
-
-Under Windows, registration may be required, as <a href="https://docs.docker.com/desktop/windows/install/">Docker Desktop</a>  requires it for educational/personal/non-commercial projects. On the plus side, it will not be necessary to install anything else because it already includes _Compose_.
-
-It is important that you carefully review the hardware and software requirements described in the installation guides. If your system fails to meet them, even after a successful installation, you will see errors when trying to start containers. An alternative for those with slightly older systems is <a href="https://www.how2shout.com/how-to/how-to-install-docker-toolbox-using-chocolatey-choco-on-windows-10.html">Docker Toolbox</a>.
-
-Once Docker Compose is installed, we will continue with the project stub. It is recommended to set up a folder structure like so:
+## Project folder structure
 
 ```
 autumn-2025
@@ -111,16 +97,15 @@ autumn-2025
 ├ autumn-2025-notification
 ├ autumn-2025-productcatalog
 ├ autumn-2025-user
-└ autumn-2025-course
+├ autumn-2025-course
+└ photofilm4u
 ```
 
-<p align="right">(<a href="#top">go up</a>)</p>
+## Installation
 
+### Microservices Docker installation
 
-### Basic infrastructure (dockers)
-
-* Download the code in ZIP format or just clone the <a href="https://github.com/UOC-SA-AUTUMN-2025/autumn-2025">autumn-2025</a> repository in the working folder (_autumn-2025_ if the recommendation has been followed).
-
+To execute all the project, that means, kafka, postgres, adminer and all microservices in docker, you should navigate to photofilm4u and execute **xxx.bat**
 * From the work folder, run the command:
 
   ```sh
@@ -131,7 +116,25 @@ autumn-2025
   docker-compose up
   (Linux)
   ```
-  
+
+
+<p align="right">(<a href="#top">go up</a>)</p>
+
+
+### Basic installation 
+It is possible to install on Docker just the default containers and execute on another machine the generated java -jar for each service.
+
+In that case, you should
+* In case basic Docker container structure does not exist
+  * go to root project folder and execute 
+  ```
+  docker compose up
+  (Win)
+  ```
+  ```sh
+  docker-compose up
+  (Linux)
+  ```
 The following containers should start:
 
 * autumn-2025-adminer_1 - adminer, an SQL client
@@ -147,67 +150,20 @@ In order to verify that all containers are up and running, we will execute the f
   docker ps -a
   ```
   
-We should see something like this:
+  
+* Once basic containers had been created you can execute each service
 
-![Docker containers running](https://github.com/UOC-SA-AUTUMN-2025/autumn-2025/blob/main/docker_containers_running.png)
+  * go to photofilm4u folder and execute
+    * java -jar course-0.0.1.jar
+    * java -jar notification-0.0.1.jar
+    * java -jar productcatalog-0.0.1.jar
+    * java -jar user-0.0.1.jar       
+  
 
-To check the operation, you can access the _Adminer_ panel at http://localhost:18080/ and make a query against the PostgreSQL DB that we have just instantiated with the following connection data:
-
-* productdb
-* Engine: PostgreSQL
-* Server: productdb
-* User: product
-* Password: product
-* Schema: product
-
-![Adminer productdb 1](https://github.com/UOC-SA-AUTUMN-2025/autumn-2025/blob/main/adminer1.png)
-
-![Adminer productdb 2](https://github.com/UOC-SA-AUTUMN-2025/autumn-2025/blob/main/adminer1_1.png)
-
-* userdb
-* Engine: PostgreSQL
-* Server: userdb
-* User: user
-* Password: user
-* Schema: user
-
-![Adminer userdb 1](https://github.com/UOC-SA-AUTUMN-2025/autumn-2025/blob/main/adminer2.png)
-
-![Adminer userdb 2](https://github.com/UOC-SA-AUTUMN-2025/autumn-2025/blob/main/adminer2_1.png)
-
-* coursedb
-* Engine: PostgreSQL
-* Server: coursedb
-* User: course
-* Password: course
-* Schema: course
-
-![Adminer coursedb 1](https://github.com/UOC-SA-AUTUMN-2025/autumn-2025/blob/main/adminer3.png)
-
-![Adminer coursedb 2](https://github.com/UOC-SA-AUTUMN-2025/autumn-2025/blob/main/adminer3_1.png)
-
-
-### Microservices stubs
-
-* Download the code in ZIP format or just clone the <a href="https://github.com/UOC-SA-AUTUMN-2025/autumn-2025-productcatalog">autumn-2025-productcatalog</a>, <a href="https://github.com/UOC-SA-AUTUMN-2025/autumn-2025-user">autumn-2025-user</a>, <a href="https://github.com/UOC-SA-AUTUMN-2025/autumn-2025-course">autumn-2025-course</a> and <a href="https://github.com/UOC-SA-AUTUMN-2025/autumn-2025-notification">autumn-2025-notification</a> repositories into the working folder (_autumn-2025_ if the recommendation has been followed)
-* Open the projects in the preferred development environment
-* Verify proper build and run by starting the projects and checking that http://localhost:18081/swagger-ui/index.html , http://localhost:18082/swagger-ui/index.html and http://localhost:18084/swagger-ui/index.html are accessible
-
-<p align="right">(<a href="#top">go up</a>)</p>
-
-
-## Links to used tools, libraries and modules
-
-* [Docker](https://www.docker.com/) / [Docker Compose](https://github.com/docker/compose)
-* [Spring](https://spring.io/) / [Spring Boot](https://spring.io/projects/spring-boot)
-  * [spring-data-jpa](https://spring.io/projects/spring-data-jpa)
-  * [spring-data-jdbc](https://spring.io/projects/spring-data-jdbc)
-  * [spring-kafka](https://spring.io/projects/spring-kafka)
-* [Apache Kafka](https://kafka.apache.org/)
-* [PostgreSQL](https://www.postgresql.org/)
-* [Lombok](https://projectlombok.org/)
-* [springdoc-openapi-ui (SwaggerUI for OpenApi 3)](https://github.com/springdoc/springdoc-openapi)
 
 
 <p align="right">(<a href="#top">go up</a>)</p>
 
+# Contact
+A.César Flores Carrera
+afloresca@uoc.edu

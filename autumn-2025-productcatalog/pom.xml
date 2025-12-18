@@ -10,7 +10,7 @@
     </parent>
     <groupId>edu.uoc.epcsd</groupId>
     <artifactId>productcatalog</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>productcatalog</name>
     <description>ProductCatalog Spring Boot stub for EPCSD</description>
     <properties>
