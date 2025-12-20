@@ -8,11 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import edu.uoc.epcsd.course.domain.Course;
-import edu.uoc.epcsd.course.domain.CourseStatus;
 import edu.uoc.epcsd.course.domain.exception.UserNotFoundException;
 import edu.uoc.epcsd.course.domain.repository.CourseRepository;
 import edu.uoc.epcsd.course.domain.repository.UserRepository;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @Component
@@ -86,7 +84,7 @@ public class CourseRepositoryImpl implements CourseRepository {
 		CourseEntity courseEntity = jpaCourseRepository.findById(course.getId()).orElseThrow(IllegalArgumentException::new);
 
 		if (courseEntity != null){
-			courseEntity.setStatus(CourseStatus.ENROLLMENT_OPEN);
+			courseEntity.setStatus(course.getStatus());
 			return jpaCourseRepository.save(courseEntity).getId();
 		}
         return null; 
@@ -100,7 +98,7 @@ public class CourseRepositoryImpl implements CourseRepository {
 		CourseEntity courseEntity = jpaCourseRepository.findById(course.getId()).orElseThrow(IllegalArgumentException::new);
 
 		if (courseEntity != null){
-			courseEntity.setStatus(CourseStatus.PENDING_CLOSUE);
+			courseEntity.setStatus(course.getStatus());
 			return jpaCourseRepository.save(courseEntity).getId();
 		}
 
@@ -113,7 +111,7 @@ public class CourseRepositoryImpl implements CourseRepository {
         CourseEntity courseEntity = jpaCourseRepository.findById(course.getId()).orElseThrow(IllegalArgumentException::new);  
 		
 		if (courseEntity != null){
-        	courseEntity.setStatus(CourseStatus.CLOSED);            
+        	courseEntity.setStatus(course.getStatus());            
        		return jpaCourseRepository.save(courseEntity).getId(); 
 		}
 		return null;

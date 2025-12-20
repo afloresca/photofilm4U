@@ -33,7 +33,10 @@
       <a href="#installation">Tnstallation</a>
       <ul>
         <li><a href="#microservices-docker-installation">Docker Desktop / Docker Compose installation</a></li>
-        <li><a href="#basic-infrastructure-dockers">Basic infrastructure (dockers)</a></li>
+        <li><a href="#basic-installation">Basic infrastructure (dockers)</a></li>
+        <ul>
+           <li><a href="#executing-microservices-locally ">Executing microservices locally</a></li>
+        </ul>
       </ul>
     </li>
     <li><a href="#contact">Contact</a></li>
@@ -45,16 +48,18 @@
 
 This is the solution project for the **SA PRAC2**.
 
-In this file you will find how to locate and execute, in two different ways, all or some of the microservice. Executables can be found at photofilm4 folder
+In this file you will find how to locate and execute, in two different ways, all or some of the microservices. Executables can be found at photofilm4-acfcfolder
+
+This solution contains; 
 
 * A docker-compose.yml file to startup the basic infrastructure needed to run the services
 * A folder for the ProductCatalog microservice 
 * A folder for the User microservice 
 * A folder for the Notification microservice 
-* A folder for the Course microservice. **This folder has the implemented classes**
-* A folder photofilm4u for 
-    * The executables jar files
-    * An alternative docker-compose.yml with all the configuration needed to run the whole project, basic infraestructure along with microservices.
+* A folder for the Course microservice. **This folder has the implemented classes for the PRAC2**
+* A folder photofilm4u-acfc for 
+    * The **executables jar files**
+    * An executable **create-containers** script to push and run all the solution, including microservices, inside Docker.
     
 
 <p align="right">(<a href="#top">go up</a>)</p>
@@ -84,9 +89,7 @@ To set up the containers that are part of the basic infrastructure of the projec
 * 18083 - Used by the notification microservice
 * 18084 - Used by the course microservice
 
-To avoid conflicts with other installed applications, the default ports of all applications have been modified. Still, if there is a conflict over a port already in use, simply modifying the ports specified in the [docker-compose.yml](https://github.com/UOC-SA-AUTUMN-2025/autumn-2025/blob/main/docker-compose.yml) file will fix the problem. This link to the official docker compose documentation explains how to modify this configuration using the _ports_: [Networking in Compose](https://docs.docker.com/compose/networking/) option.
-
-__IMPORTANT NOTICE:__ The modified ports will also have to be changed in the microservices configuration (usually defined in the Spring _application.properties_ file).
+**All this ports should be available**
 
 ## Project folder structure
 
@@ -98,43 +101,45 @@ autumn-2025
 ├ autumn-2025-productcatalog
 ├ autumn-2025-user
 ├ autumn-2025-course
-└ photofilm4u
+└ photofilm4u-acfc
 ```
 
 ## Installation
+This project can be installed and executed in two different ways. You can run it safely and completely inside Docker, that means that all required dependencies and microservices will run on Docker, or you can run each microservice separately, using Docker to run only kafka and postgreSQL.
+
+Ports and basic configuration has not been changed and it is as it has been delivered initially.
 
 ### Microservices Docker installation
 
-To execute all the project, that means, kafka, postgres, adminer and all microservices in docker, you should navigate to photofilm4u and execute **xxx.bat**
-* From the work folder, run the command:
+To execute all the project, that means, kafka, postgres, adminer and all microservices in docker, you should navigate to photofilm4u-acfc and execute from the work folder
+* Windows
+```
+create-containers.bat
+```
+* Linux
+```
+bash create-containers.sh
+```
 
-  ```sh
-  docker compose up
-  (Win)
-  ```
-  ```sh
-  docker-compose up
-  (Linux)
-  ```
-
+or 
+```
+chmod +x create-containers.sh
+./create-containers.sh
+```
+_IMPORTANT:_ Linux version of the script has not been test it, **use it carefully.**
 
 <p align="right">(<a href="#top">go up</a>)</p>
 
 
 ### Basic installation 
-It is possible to install on Docker just the default containers and execute on another machine the generated java -jar for each service.
+If you want just the default containers and execute the generated java -jar for each service separatily, you should:
 
-In that case, you should
 * In case basic Docker container structure does not exist
   * go to root project folder and execute 
   ```
   docker compose up
-  (Win)
   ```
-  ```sh
-  docker-compose up
-  (Linux)
-  ```
+
 The following containers should start:
 
 * autumn-2025-adminer_1 - adminer, an SQL client
@@ -149,16 +154,16 @@ In order to verify that all containers are up and running, we will execute the f
   ```sh
   docker ps -a
   ```
-  
-  
-* Once basic containers had been created you can execute each service
+#### Executing microservices locally  
+* Once basic containers had been created and running you can execute each microservice locally
 
-  * go to photofilm4u folder and execute
-    * java -jar course-0.0.1.jar
-    * java -jar notification-0.0.1.jar
-    * java -jar productcatalog-0.0.1.jar
-    * java -jar user-0.0.1.jar       
-  
+  * Open a terminal for each microservice you want to execute and go to **photofilm4u-acfc** folder and execute
+    * **java -jar course-0.0.1.jar**
+    * **java -jar notification-0.0.1.jar**
+    * **java -jar productcatalog-0.0.1.jar**
+    * **java -jar user-0.0.1.jar**      
+
+You should see each service running on its port.
 
 
 

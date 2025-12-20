@@ -192,10 +192,22 @@ public class CourseRESTController {
              throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e+"", e);
          }     
     }       
-
     // use the corresponding mapping HTTP request annotation with the parameter: "/{courseId}/closeGradeReports"
     // and create the method ResponseEntity<Boolean> closeGradeReports(@PathVariable @NotNull Long courseId)
     // which call the corresponding closeGradeReports method  
+    @PatchMapping("/{courseId}/closeGradeReports")
+    public ResponseEntity<Boolean> closeGradeReports(@PathVariable @NotNull Long courseId) {
+        log.trace("closeGradeReports");
+        try {
+            log.trace("close Grade Reports for Course number " +courseId);
+            return courseService.closeGradeReports(courseId) > 0 ?
+                    new ResponseEntity<>(true, HttpStatus.OK) :
+                    new ResponseEntity<>(false, HttpStatus.OK);
+
+        } catch (IllegalArgumentException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e+"", e);
+        }
+    }
     
     @PatchMapping("/{courseId}/closeCourse")
     public ResponseEntity<Boolean> closeCourse(@PathVariable @NotNull Long courseId) {

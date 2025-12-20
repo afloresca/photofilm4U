@@ -4,5 +4,5 @@ COPY . .
 RUN mvn clean package -DskipTests
 
 FROM eclipse-temurin:11-jre
-COPY --from=build /app/target/productcatalog-0.0.1-SNAPSHOT app.jar
+COPY --from=build /app/target/productcatalog-0.0.1.jar app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]

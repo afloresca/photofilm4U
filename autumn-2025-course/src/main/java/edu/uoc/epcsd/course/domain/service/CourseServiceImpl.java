@@ -130,7 +130,10 @@ public class CourseServiceImpl implements CourseService {
             throw new IllegalArgumentException("The course " +courseId+"th is not in Enrollment Open status!");
         }
 
-        course.setStatus(CourseStatus.PENDING_CLOSUE);
+        // change status to ACTIVE. To indicate that the course is now running
+        course.setStatus(CourseStatus.ACTIVE);
+        // and return courseRepository.closeEnrollmentCourse(course)  
+        Long closeId = courseRepository.closeEnrollmentCourse(course);
 
         //emit event CourseEnrollmentClosed
         courseKafkaTemplate.send(KafkaConstants.COURSE_TOPIC, CourseMessage.builder()
@@ -139,10 +142,6 @@ public class CourseServiceImpl implements CourseService {
                 .occurredOn(LocalDateTime.now())
                 .payload(Long.toString(courseId))
                 .build());
-
-        // and return courseRepository.closeEnrollmentCourse(course)  
-        Long closeId = courseRepository.closeEnrollmentCourse(course);
-
         
         return closeId;
     }
@@ -192,9 +191,10 @@ public class CourseServiceImpl implements CourseService {
         if (!course.getStatus().equals(CourseStatus.ACTIVE)) {
             throw new IllegalArgumentException("The course " +courseId+" is not in Active status!");
         }
-        // and return courseRepository.closeGradeReports(course)  
-        Long closeId = courseRepository.closeGradeReports(course);
 
+        course.setStatus(CourseStatus.PENDING_CLOSUE);
+        Long closeId = courseRepository.closeGradeReports(course);
+        
         //send kafka event CourseGradeReportsClosed
         courseKafkaTemplate.send(KafkaConstants.COURSE_TOPIC, CourseMessage.builder()
                 .courseId(courseId)
@@ -202,6 +202,7 @@ public class CourseServiceImpl implements CourseService {
                 .occurredOn(LocalDateTime.now())
                 .payload(Long.toString(courseId))
                 .build());  
+
 
         return closeId;
     }
