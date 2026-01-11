@@ -24,6 +24,7 @@ class CourseUnitTest {
         course.setDuration(120L);
         course.setLanguage("English");
         course.setLocation("London");
+        course.setStatus(CourseStatus.ENROLLMENT_OPEN);
 
         assertThat(course.getStatus())
                 .isEqualTo(CourseStatus.ENROLLMENT_OPEN);

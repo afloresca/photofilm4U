@@ -1,9 +1,8 @@
 package edu.uoc.epcsd.course.application.rest;
 
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.util.List;
 
@@ -35,20 +34,20 @@ class CourseRESTControllerUnitTest {
                 .thenReturn(List.of(course1, course2));
 
         // when & then
-        mockMvc.perform(get("/courses"))
+        mockMvc.perform(get("/courses/"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(2))
                 .andExpect(jsonPath("$[0].id").value(1L))
-                .andExpect(jsonPath("$[0].name").value("SA"))
+                .andExpect(jsonPath("$[0].title").value("SA"))
                 .andExpect(jsonPath("$[1].id").value(2L))
-                .andExpect(jsonPath("$[1].name").value("DS"));
+                .andExpect(jsonPath("$[1].title").value("DS"));
     }
 
-    Course privateCourse(Long id, String instructor, String title) {
-        Course course = new Course();
-        course.setId(id);
-        course.setInstructor(instructor);
-        course.setTitle(title);
-        return course;
+    Course privateCourse(Long id,  String title, String description) {
+        return Course.builder()
+                .id(id)
+                .title(title)
+                .description(description) 
+                .build();
     }
 }

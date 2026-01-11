@@ -1,15 +1,14 @@
 package edu.uoc.epcsd.course.domain.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
-
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.kafka.core.KafkaTemplate;
 
@@ -71,10 +70,10 @@ class CourseServiceUnitTest {
                      .contains(course);
     }
 
-    Course privateCourse(Long id, String instructor, String title) {
+    Course privateCourse(Long id, String title, String description) {
         Course course = new Course();
         course.setId(id);
-        course.setInstructor(instructor);
+        course.setDescription(description);
         course.setTitle(title);
         return course;
     }
